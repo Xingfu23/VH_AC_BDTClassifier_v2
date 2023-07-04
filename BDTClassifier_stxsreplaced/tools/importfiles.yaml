@@ -1,0 +1,27 @@
+path:
+  - /eos/user/x/xisu/WorkSpace/VH_AC_Analysis/Data_MC_comparision/CMSSW_12_4_3/src/Makeplot/UL_dataset/commontools/event_preselection_forstxstraining/outputfiles
+
+background:
+  '2018':
+  '2017':
+    - /UL_2017/outvar_2017UL_diboson.root
+    - /UL_2017/outvar_2017UL_diphoton.root
+    - /UL_2017/outvar_2017UL_DY.root
+    - /UL_2017/outvar_2017UL_gjet.root
+    - /UL_2017/outvar_2017UL_ggh125.root
+    - /UL_2017/outvar_2017UL_top.root
+    - /UL_2017/outvar_2017UL_tth125.root
+    - /UL_2017/outvar_2017UL_vbf125.root
+    - /UL_2017/outvar_2017UL_wh_had.root 
+    - /UL_2017/outvar_2017UL_zh_had.root
+    - /UL_2017/outvar_2017UL_zh_lep.root
+  '2016preVFP':
+  '2016postVFP':
+
+signal:
+  '2018':
+  '2017':
+    - /UL_2017/outvar_2017UL_zh_met.root
+    - /UL_2017/outvar_2017UL_wh_lep.root
+  '2016preVFP':
+  '2016postVFP':

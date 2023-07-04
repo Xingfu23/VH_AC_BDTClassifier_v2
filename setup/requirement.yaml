@@ -1,0 +1,17 @@
+name: hepenv_v4
+channels:
+  - defaults
+  - conda-forge
+  - anaconda
+dependencies:
+- python>=3.10
+- numpy
+- scipy
+- pyyaml
+- pandas
+- matplotlib
+- scikit-learn-intelex
+- xgboost
+- optuna
+- uproot
+- mplhep
