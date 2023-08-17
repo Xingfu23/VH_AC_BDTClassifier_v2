@@ -1,0 +1,58 @@
+path:
+  - /eos/user/x/xisu/WorkSpace/VH_AC_Analysis/Data_MC_comparision/CMSSW_12_4_3/src/Makeplot/UL_dataset/commontools/event_preselection_fortraining/output_files
+
+background:
+  '2018':
+    - /outvar_UL18_ZHiggs0PMToGG.root
+    - /outvar_UL18_WHiggs0PMToGG.root
+  '2017':
+    - /outvar_UL17_ZHiggs0PMToGG.root
+    - /outvar_UL17_WHiggs0PMToGG.root
+  '2016preVFP':
+    - /outvar_UL16_preVFP_ZHiggs0PMToGG.root
+    - /outvar_UL16_preVFP_WHiggs0PMToGG.root
+  '2016postVFP':
+    - /outvar_UL16_postVFP_ZHiggs0PMToGG.root
+    - /outvar_UL16_postVFP_WHiggs0PMToGG.root
+signal:
+  'fa2':
+    '2018':
+      - /outvar_UL18_ZHiggs0PHToGG.root
+      - /outvar_UL18_WHiggs0PHToGG.root
+    '2017':
+      - /outvar_UL17_ZHiggs0PHToGG.root
+      - /outvar_UL17_WHiggs0PHToGG.root
+    '2016preVFP':
+      - /outvar_UL16_preVFP_ZHiggs0PHToGG.root
+      - /outvar_UL16_preVFP_WHiggs0PHToGG.root
+    '2016postVFP':
+      - /outvar_UL16_postVFP_ZHiggs0PHToGG.root
+      - /outvar_UL16_postVFP_WHiggs0PHToGG.root
+
+  'fa3':
+    '2018':
+      - /outvar_UL18_ZHiggs0MToGG.root
+      - /outvar_UL18_WHiggs0MToGG.root
+    '2017':
+      - /outvar_UL17_ZHiggs0MToGG.root
+      - /outvar_UL17_WHiggs0MToGG.root
+    '2016preVFP':
+      - /outvar_UL16_preVFP_ZHiggs0MToGG.root
+      - /outvar_UL16_preVFP_WHiggs0MToGG.root
+    '2016postVFP':
+      - /outvar_UL16_postVFP_ZHiggs0MToGG.root
+      - /outvar_UL16_postVFP_WHiggs0MToGG.root
+  
+  'L1':
+    '2018':
+      - /outvar_UL18_ZHiggs0L1ToGG.root
+      - /outvar_UL18_WHiggs0L1ToGG.root
+    '2017':
+      - /outvar_UL17_ZHiggs0L1ToGG.root
+      - /outvar_UL17_WHiggs0L1ToGG.root
+    '2016preVFP':
+      - /outvar_UL16_preVFP_ZHiggs0L1ToGG.root
+      - /outvar_UL16_preVFP_WHiggs0L1ToGG.root
+    '2016postVFP':
+      - /outvar_UL16_postVFP_ZHiggs0L1ToGG.root
+      - /outvar_UL16_postVFP_WHiggs0L1ToGG.root
