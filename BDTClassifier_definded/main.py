@@ -11,6 +11,7 @@ import optuna
 
 from tools.xgboost2tmva import *
 from tools.common_tool import *
+from tools.bdt_vars import *
 from plot_tools.plot_type import model_importance_plot, probability_plot, roc_curve
 
 '''
@@ -46,14 +47,13 @@ def main():
 
     # Seperate training dataset(60%) and testing dataset(20% for validation, and another 20% for testing)
     X, y = df_photondata.iloc[:, :-1], df_photondata['sig/bkg']
-    X_train, X_tmp, y_train, y_tmp = train_test_split(X, y, test_size=0.6, stratify=y, random_state=69)
+    X_train, X_tmp, y_train, y_tmp = train_test_split(X, y, test_size=0.2, stratify=y, random_state=69)
     X_valid, X_test, y_valid, y_test = train_test_split(X_tmp, y_tmp, test_size=0.5, stratify=y_tmp, random_state=69)
     eval_set = [(X_train, y_train), (X_valid, y_valid)]
 
-    # sc = StandardScaler().set_output(transform="pandas")
-    # X_train = sc.fit_transform(X_train)
-    # X_valid = sc.transform(X_valid)
-    # X_test = sc.transform(X_test)
+    print (f"Training dataset size: {X_train.shape}")
+    print (f"Validation dataset size: {X_valid.shape}")
+    print (f"Testing dataset size: {X_test.shape}")
 
     def objective(trial, X_train=X_train, y_train=y_train, X_valid=X_valid, y_valid=y_valid):
         """
@@ -74,14 +74,15 @@ def main():
 
         # XGBoost sklearn configuration
         _XGBEngine = xgb.XGBClassifier (
-            booster               = 'gbtree',
-            objective             = 'binary:logistic',
-            use_label_encoder     = None,
-            eval_metric           = ['logloss'],
+            booster = 'gbtree',
+            objective = 'binary:logistic',
+            use_label_encoder = None,
+            eval_metric = ['logloss'],
             early_stopping_rounds = 50,
-            scale_pos_weight      = postive_ratio,
-            tree_method           = 'gpu_hist', # Using GPU
-            gpu_id                = 0           # Using GPU    
+            scale_pos_weight = postive_ratio,
+            tree_method = 'gpu_hist', # Using GPU
+            gpu_id = 0, # Using GPU
+            predictor = 'gpu_predictor' # Using GPU    
         )
 
         # Training
@@ -110,31 +111,28 @@ def main():
     # )
 
     # Creating Optuna object and defining its parameters
-    study = optuna.create_study(direction='minimize')
-    study.optimize(objective, n_trials=100)
+    study = optuna.create_study(sampler=optuna.samplers.RandomSampler(seed=69), direction='minimize')
+    study.optimize(objective, n_trials=20)
 
-    # Based on hyperparameter optimisation result
-    # print("===========================================================")
-    # print(f"Best hyperparameters:{XGBEngine.best_params_}")
-    # print("===========================================================")
-    # best_XGBEngine = XGBEngine.best_estimator_
-    # print(f"Best hyperparameters: {best_XGBEngine.get_xgb_params()}")
-    # print("===========================================================")
-
-    # Showing optimization results
-    print('Number of finished trials:', len(study.trials))
-    print('Best trial parameters:', study.best_trial.params)
-    print('Best score:', study.best_value)
+    print(f"Number of finished trials: {len(study.trials)}")
+    print(f"Best trial parameters: {study.best_trial.params}")
+    print(f"Best score: {study.best_value}")
 
     trial = study.best_trial
     params = trial.params
+
+    # Saving the best model as txt file
+    with open(f'output_plots/{args.PlotName}.txt', 'w') as file:
+        file.write(f"Best hyperparameters: {params}\n")
+        file.write(f"Best score: {study.best_value}\n")
+    print(f"The best hyperparameters result has been saved as 'output_plots/{args.PlotName}.txt'\n")
 
     best_XGBEngine = xgb.XGBClassifier(
         **params,
         objective = 'binary:logistic',
         use_label_encoder = None,
         eval_metric = ['logloss'],
-        early_stopping_rounds = 50,
+        early_stopping_rounds = 10,
         tree_method='gpu_hist', 
         gpu_id=0
     )
@@ -158,6 +156,7 @@ def main():
     # Check the output folder
     if not os.path.exists('output_plots'):
         os.makedirs('output_plots')
+    
     # Drawing importance plot
     model_importance_plot(best_XGBEngine, args.PlotName)
 
