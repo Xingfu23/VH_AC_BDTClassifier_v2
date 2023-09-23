@@ -20,7 +20,6 @@ def main():
     # Print out the description of the dataset
     print(iris.DESCR)
     
-    
     # Create a dataframe with the four feature variables and the target variable
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
     df['target'] = iris.target
@@ -61,6 +60,7 @@ def main():
     # Make predictions for test data
     y_pred = pd.DataFrame(XGBEngine.predict(X_test), columns=['target'])
     df_pred = pd.concat([y_pred, y_test.reset_index(drop=True)], axis=1).dropna()
+    
     # Change the column name
     df_pred.columns = ['pred', 'target']
     
@@ -99,23 +99,6 @@ def main():
         plt.savefig(plot_name, bbox_inches='tight')
         print(f"Probability histogram saved as {plot_name}")
         plt.clf()
-        
-    
-    # plt.figure(figsize=(8,6))
-    # ax = plt.gca()
-    # labels = ['Setosa', 'Versicolor', 'Virginica']
-    # bins = np.linspace(0.5, 1., 50)
-    # plt.hist(y_pred_com_0['0'], bins, density=True, alpha=0.7, color='b', label=labels[0], log=False)
-    # plt.hist(y_pred_com_1['1'], bins, density=True, alpha=0.7, color='r', label=labels[1], log=False)
-    # plt.hist(y_pred_com_2['2'], bins, density=True, alpha=0.7, color='g', label=labels[2], log=False)
-    # ax.set_xlabel("Probability", fontsize=14, fontweight ='bold', loc='right')
-    # ax.set_ylabel("1/Events", fontsize=14, fontweight ='bold', loc='top')
-    # ax.set_yscale('log')
-    # plt.legend(bbox_to_anchor=(1, 1), prop={'size': 12})
-    # plt.savefig(f"probability_iris.png", bbox_inches='tight')
-    # print("Probability histogram saved as probability_iris.png")
-    # plt.clf()
-    
     
 if __name__ == '__main__':
     main()
